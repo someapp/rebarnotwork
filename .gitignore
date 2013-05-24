@@ -1,3 +1,7 @@
+*~
+*.*~
+*.log
+*.dump
 .eunit
 deps
 *.o
