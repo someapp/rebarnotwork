@@ -1,4 +1,15 @@
-{sys, [
+{ok, VsnData} = file:read_file("../VERSION"),
+Vsn = re:replace(VsnData, "^\\s+|\\s+$", "", [global, {return, list}]),
+{ok, PackageName} = file:read_file("../PACKAGE"),
+PkgName = re:replace(PackageName, "^\\s+|\\s+$", "", [global, {return, list}]),
+PkgNameAtom = list_to_atom(PkgName),
+io:format("PackageName: ~s and atom ~s~n",[PkgName, PkgNameAtom]),
+
+
+
+
+
+[{sys, [
        {lib_dirs, ["../apps", "../deps"]},
        {erts, [{mod_cond, derived}, {app_file, strip}]},
        {app_file, strip},
@@ -23,9 +34,9 @@
                            "^erts.*/(doc|info|include|lib|man|src)"]},
        {excl_app_filters, ["\.gitignore"]},
        {app, rebarnotwork, [{mod_cond, app}, {incl_cond, include}]}
-      ]}.
+      ]},
 
-{target_dir, "rebarnotwork"}.
+{target_dir, "rebarnotwork"},
 
 {overlay, [
            {mkdir, "log/sasl"},
@@ -37,4 +48,5 @@
            {copy, "files/install_upgrade.escript", "bin/install_upgrade.escript"},
            {copy, "files/sys.config", "releases/\{\{rel_vsn\}\}/sys.config"},
            {copy, "files/vm.args", "releases/\{\{rel_vsn\}\}/vm.args"}
-          ]}.
+          ]}
+].
