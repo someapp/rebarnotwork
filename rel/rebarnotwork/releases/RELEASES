@@ -1,4 +1,4 @@
-[{release,"rebarnotwork","1","5.9.3.1",
+[{release,"rebarnotwork","1.0.0","5.9.3.1",
           [{kernel,"2.15.3",
                    "/opt/temp/rebarnotwork/rel/rebarnotwork/lib/kernel-2.15.3"},
            {stdlib,"1.18.3",

@@ -4,7 +4,8 @@ Vsn = re:replace(VsnData, "^\\s+|\\s+$", "", [global, {return, list}]),
 PkgName = re:replace(PackageName, "^\\s+|\\s+$", "", [global, {return, list}]),
 PkgNameAtom = list_to_atom(PkgName),
 io:format("PackageName: ~s and atom ~s~n",[PkgName, PkgNameAtom]),
-
+PkgStartScript = "files/"++PkgName,
+PkgStartCmd = "files/"++PkgName++".cmd",
 
 
 
@@ -13,19 +14,19 @@ io:format("PackageName: ~s and atom ~s~n",[PkgName, PkgNameAtom]),
        {lib_dirs, ["../apps", "../deps"]},
        {erts, [{mod_cond, derived}, {app_file, strip}]},
        {app_file, strip},
-       {rel, "rebarnotwork", "1",
+       {rel, PkgName, Vsn,
         [
          kernel,
          stdlib,
          sasl,
-         rebarnotwork
+         PkgNameAtom
         ]},
        {rel, "start_clean", "",
         [
          kernel,
          stdlib
         ]},
-       {boot_rel, "rebarnotwork"},
+       {boot_rel, PkgName},
        {profile, embedded},
        {incl_cond, derived},
        {mod_cond, derived},
@@ -33,10 +34,10 @@ io:format("PackageName: ~s and atom ~s~n",[PkgName, PkgNameAtom]),
        {excl_sys_filters, ["^bin/.*", "^erts.*/bin/(dialyzer|typer)",
                            "^erts.*/(doc|info|include|lib|man|src)"]},
        {excl_app_filters, ["\.gitignore"]},
-       {app, rebarnotwork, [{mod_cond, app}, {incl_cond, include}]}
+       {app, PkgNameAtom, [{mod_cond, app}, {incl_cond, include}]}
       ]},
 
-{target_dir, "rebarnotwork"},
+{target_dir, PkgName},
 
 {overlay, [
            {mkdir, "log/sasl"},
